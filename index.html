@@ -3228,10 +3228,21 @@
         // ==========================================
         // CONFIGURAÇÃO DO SUPABASE
         // ==========================================
-        // Se o seu limite gratuito expirou, crie um novo projeto em https://supabase.com
-        // e substitua as chaves abaixo pelas do novo projeto.
+        // Detectar ambiente automaticamente:
+        // - Se estiver em localhost ou IP de rede interna (192.168.x.x, 10.x.x.x, 172.16-31.x.x),
+        //   usa o host atual na porta 54321 (Supabase em Docker na mesma máquina/servidor).
+        // - Caso contrário (ex: GitHub Pages), usa a URL pública configurável abaixo.
+        function computeSupabaseUrl() {
+            var host = window.location.hostname || 'localhost';
+            var isLocalHost = (host === 'localhost' || host === '127.0.0.1');
+            var isPrivateIp = /^10\./.test(host) || /^192\.168\./.test(host) || /^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(host);
+            if (isLocalHost || isPrivateIp) {
+                return 'http://' + host + ':54321';
+            }
+            return 'https://thirty-mangos-decide.loca.lt';
+        }
         
-        const SUPABASE_URL = 'https://thirty-mangos-decide.loca.lt';
+        const SUPABASE_URL = computeSupabaseUrl();
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1cGFiYXNlLXByb2plY3Qtc2VjcmV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2MTQyMjUxMDYsImV4cCI6MTkyOTgwNTEwNn0.EyWgo185-Vo86n8274d8274d8274d8274d8274d8274d8274d8274d8274';
         
         const INSPECTION_PHOTOS_BUCKET = 'inspection-photos';
