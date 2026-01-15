@@ -3249,7 +3249,14 @@
         // ==========================================
 
         // Inicializar cliente Supabase
-        var supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        var supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+            realtime: {
+                params: {
+                    eventsPerSecond: 2,
+                },
+                timeout: 20000
+            }
+        });
         
         // Estado global da aplicação
         let currentUser = null;
@@ -10973,6 +10980,8 @@
                         if (status === 'SUBSCRIBED') {
                             const payload = { email: u.email, name: getDisplayName(u) };
                             try { await presenceChannel.track(payload); } catch(_) {}
+                        } else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+                            console.warn('Presence channel status:', status);
                         }
                     });
             } catch(_) {}
