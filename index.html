@@ -3239,7 +3239,7 @@
             if (isLocalHost || isPrivateIp) {
                 return 'http://' + host + ':54321';
             }
-            return 'https://thirty-mangos-decide.loca.lt';
+            return 'https://salvation-discrete-helena-always.trycloudflare.com';
         }
         
         const SUPABASE_URL = computeSupabaseUrl();
@@ -3249,11 +3249,7 @@
         // ==========================================
 
         // Inicializar cliente Supabase
-        var supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-          global: {
-            headers: { 'Bypass-Tunnel-Reminder': 'true' }
-          }
-        });
+        var supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         
         // Estado global da aplicação
         let currentUser = null;
